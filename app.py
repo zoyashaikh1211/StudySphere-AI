@@ -6,8 +6,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# -------- CSS --------
-
 st.markdown("""
 <style>
 
@@ -16,57 +14,76 @@ background-color:#F8F3ED;
 }
 
 h1{
-color:#5A4634;
 text-align:center;
-font-size:55px;
+color:#5C4B3B;
+font-size:58px;
 }
 
 h3{
 text-align:center;
-color:#7B6651;
+color:#876B58;
 }
 
-p{
-text-align:center;
-color:#6D5B4A;
-}
-
-.stButton>button{
-background:#A67B5B;
-color:white;
-border-radius:12px;
-padding:12px 25px;
-border:none;
-font-size:18px;
-}
-
-.stFileUploader{
+.upload{
 background:white;
-padding:20px;
+padding:25px;
 border-radius:20px;
+box-shadow:0px 4px 12px rgba(0,0,0,0.08);
+}
+
+.feature{
+background:white;
+padding:18px;
+border-radius:18px;
+text-align:center;
+box-shadow:0px 4px 12px rgba(0,0,0,0.06);
+margin:10px;
 }
 
 </style>
-""",unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-st.markdown("# 📚 StudySphere AI")
+st.markdown("# 🌸 StudySphere AI")
 
-st.markdown("### Learn Smarter. Revise Faster.")
+st.markdown("### Your Personal AI Study Room")
 
-st.markdown(
-"""
-Upload your notes and let AI create
-summaries, flashcards, quizzes and
-your own AI tutor.
-"""
+st.write(
+    "<center>Learn Smarter • Revise Faster • Score Better</center>",
+    unsafe_allow_html=True
 )
 
 st.write("")
+st.write("")
 
 st.file_uploader(
-"📄 Upload your PDF",
-type=["pdf"]
+    "📄 Upload PDF",
+    type=["pdf"]
 )
+
+st.write("")
+st.write("")
+
+col1,col2,col3=st.columns(3)
+
+with col1:
+    st.info("📝 Summary")
+
+with col2:
+    st.info("🧠 Flashcards")
+
+with col3:
+    st.info("❓ Quiz")
+
+col4,col5,col6=st.columns(3)
+
+with col4:
+    st.info("💬 AI Tutor")
+
+with col5:
+    st.info("💡 Key Points")
+
+with col6:
+    st.info("📅 Planner")
 
 st.write("")
 st.write("")
@@ -75,10 +92,9 @@ st.markdown(
 """
 <center>
 
-🌸 ✨ ☕ 📖 🌿 ⭐ 🪴 💡 🌸
+🌿 ☕ 📚 ✨ 🌸 🪴 ⭐
 
 </center>
-
 """,
 unsafe_allow_html=True
 )

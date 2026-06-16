@@ -1,4 +1,5 @@
 import streamlit as st
+from pypdf import PdfReader
 
 st.set_page_config(
     page_title="StudySphere AI",
@@ -55,21 +56,24 @@ st.write(
 st.write("")
 st.write("")
 
-from pypdf import PdfReader
-
-uploaded_file = st.file_uploader("📄 Upload PDF", type=["pdf"])
+uploaded_file = st.file_uploader(
+    "📄 Upload PDF",
+    type=["pdf"]
+)
 
 if uploaded_file:
     reader = PdfReader(uploaded_file)
 
     text = ""
+
     for page in reader.pages:
         page_text = page.extract_text()
         if page_text:
             text += page_text
 
     st.session_state["pdf_text"] = text
-    st.success("Uploaded!")
+
+    st.success("✅ PDF loaded successfully!")
 
 st.write("")
 st.write("")

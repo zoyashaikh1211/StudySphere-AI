@@ -87,3 +87,30 @@ Notes:
     except Exception:
         return "⚠️ Gemini is currently busy. Please try again in a minute."
 
+
+def ask_tutor(notes, question):
+
+    prompt = f"""
+You are an AI study tutor.
+
+Study Notes:
+{notes}
+
+Student Question:
+{question}
+
+Explain in simple language with examples if needed.
+Keep the answer concise and easy to understand.
+"""
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+
+        return response.text
+
+    except Exception:
+        return "⚠️ Gemini is currently busy. Please try again in a minute."
+

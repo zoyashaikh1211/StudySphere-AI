@@ -6,7 +6,6 @@ from google import genai
 # Load .env
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-
 # Create Gemini client
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
@@ -23,9 +22,30 @@ def generate_summary(text):
     """
 
     response = client.models.generate_content(
-    model="gemini-2.5-flash",
-    contents=prompt
-)
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
+
+    return response.text
+
+
+def generate_keypoints(text):
+    prompt = f"""
+    Read these study notes and extract:
+
+    - 10 important key points
+    - Short and easy to revise
+    - Use bullet points
+    - Focus on exam preparation
+
+    Notes:
+    {text}
+    """
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
 
     return response.text
 

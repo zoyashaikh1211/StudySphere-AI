@@ -1,15 +1,23 @@
 import streamlit as st
+from utils.gemini import generate_summary
 
 st.set_page_config(page_title="AI Summary")
 
 st.title("📝 AI Summary")
 
-uploaded_file = st.file_uploader(
-    "Upload your PDF",
-    type=["pdf"]
-)
+# Check if PDF exists
+if "pdf_text" not in st.session_state:
+    st.warning("⚠️ Please upload a PDF from the Home page first.")
+    st.stop()
 
-if uploaded_file:
-    st.success(f"Uploaded: {uploaded_file.name}")
+text = st.session_state["pdf_text"]
 
-    st.info("🤖 AI summary will appear here.")
+# Generate summary only once
+if "summary" not in st.session_state:
+
+    with st.spinner("🤖 Generating AI Summary..."):
+        st.session_state["summary"] = generate_summary(text[:6000])
+
+st.success("✨ Summary generated!")
+
+st.markdown(st.session_state["summary"])

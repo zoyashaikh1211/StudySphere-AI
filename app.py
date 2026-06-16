@@ -55,35 +55,52 @@ st.write(
 st.write("")
 st.write("")
 
-st.file_uploader(
-    "📄 Upload PDF",
-    type=["pdf"]
-)
+from pypdf import PdfReader
+
+uploaded_file = st.file_uploader("📄 Upload PDF", type=["pdf"])
+
+if uploaded_file:
+    reader = PdfReader(uploaded_file)
+
+    text = ""
+    for page in reader.pages:
+        page_text = page.extract_text()
+        if page_text:
+            text += page_text
+
+    st.session_state["pdf_text"] = text
+    st.success("Uploaded!")
 
 st.write("")
 st.write("")
 
-col1,col2,col3=st.columns(3)
+col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.info("📝 Summary")
+    if st.button("📝 Summary", use_container_width=True):
+        st.switch_page("pages/1_Summary.py")
 
 with col2:
-    st.info("🧠 Flashcards")
+    if st.button("🧠 Flashcards", use_container_width=True):
+        st.switch_page("pages/3_Flashcards.py")
 
 with col3:
-    st.info("❓ Quiz")
+    if st.button("❓ Quiz", use_container_width=True):
+        st.switch_page("pages/4_Quiz.py")
 
-col4,col5,col6=st.columns(3)
+col4, col5, col6 = st.columns(3)
 
 with col4:
-    st.info("💬 AI Tutor")
+    if st.button("💬 AI Tutor", use_container_width=True):
+        st.switch_page("pages/5_AI_Tutor.py")
 
 with col5:
-    st.info("💡 Key Points")
+    if st.button("💡 Key Points", use_container_width=True):
+        st.switch_page("pages/2_Key_Points.py")
 
 with col6:
-    st.info("📅 Planner")
+    if st.button("📅 Planner", use_container_width=True):
+        st.switch_page("pages/6_Study_Planner.py")
 
 st.write("")
 st.write("")

@@ -6,8 +6,6 @@ from google import genai
 # Load .env
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-print(os.getcwd())
-print(os.getenv("GEMINI_API_KEY"))
 
 # Create Gemini client
 client = genai.Client(
@@ -25,9 +23,9 @@ def generate_summary(text):
     """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-    )
+    model="gemini-2.5-flash",
+    contents=prompt
+)
 
     return response.text
 

@@ -11,34 +11,55 @@ st.markdown("""
 <style>
 
 .stApp{
-background-color:#F8F3ED;
+    background-color:#F8F3ED;
 }
 
+/* Title */
+
 h1{
-text-align:center;
-color:#5C4B3B;
-font-size:58px;
+    text-align:center;
+    color:#5C4B3B;
+    font-size:58px;
 }
 
 h3{
-text-align:center;
-color:#876B58;
+    text-align:center;
+    color:#876B58;
 }
 
-.upload{
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0px 4px 12px rgba(0,0,0,0.08);
+/* Upload Box */
+
+[data-testid="stFileUploader"]{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    border:1px solid #E7DED3;
 }
 
-.feature{
-background:white;
-padding:18px;
-border-radius:18px;
-text-align:center;
-box-shadow:0px 4px 12px rgba(0,0,0,0.06);
-margin:10px;
+/* Buttons */
+
+.stButton>button{
+    width:100%;
+    height:75px;
+    border-radius:18px;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
+    background:white;
+    color:#5C4B3B;
+    box-shadow:0px 4px 12px rgba(0,0,0,0.08);
+    transition:0.25s;
+}
+
+.stButton>button:hover{
+    transform:scale(1.03);
+    background:#EFE6DC;
+}
+
+/* Success Box */
+
+.stAlert{
+    border-radius:15px;
 }
 
 </style>
@@ -48,13 +69,34 @@ st.markdown("# 🌸 StudySphere AI")
 
 st.markdown("### Your Personal AI Study Room")
 
-st.write(
-    "<center>Learn Smarter • Revise Faster • Score Better</center>",
-    unsafe_allow_html=True
+st.markdown(
+"""
+<center>
+
+Learn Smarter • Revise Faster • Score Better
+
+</center>
+""",
+unsafe_allow_html=True
 )
 
-st.write("")
-st.write("")
+st.divider()
+
+st.info("""
+📚 Upload your notes once and let AI generate:
+
+• 📝 Summary
+
+• 💡 Key Points
+
+• 🧠 Flashcards
+
+• ❓ Quiz
+
+• 💬 AI Tutor
+
+• 📅 Study Planner
+""")
 
 uploaded_file = st.file_uploader(
     "📄 Upload PDF",
@@ -62,12 +104,15 @@ uploaded_file = st.file_uploader(
 )
 
 if uploaded_file:
+
     reader = PdfReader(uploaded_file)
 
     text = ""
 
     for page in reader.pages:
+
         page_text = page.extract_text()
+
         if page_text:
             text += page_text
 
@@ -75,8 +120,7 @@ if uploaded_file:
 
     st.success("✅ PDF loaded successfully!")
 
-st.write("")
-st.write("")
+st.divider()
 
 col1, col2, col3 = st.columns(3)
 
@@ -106,8 +150,7 @@ with col6:
     if st.button("📅 Planner", use_container_width=True):
         st.switch_page("pages/6_Study_Planner.py")
 
-st.write("")
-st.write("")
+st.divider()
 
 st.markdown(
 """
@@ -115,7 +158,12 @@ st.markdown(
 
 🌿 ☕ 📚 ✨ 🌸 🪴 ⭐
 
+<br>
+
+Made with ❤️ using Streamlit & Gemini AI
+
 </center>
 """,
 unsafe_allow_html=True
 )
+

@@ -1,3 +1,4 @@
+from utils.pdf_export import create_pdf
 import streamlit as st
 from utils.gemini import generate_summary
 
@@ -18,3 +19,17 @@ if "summary" not in st.session_state:
 st.success("✨ Summary Ready!")
 
 st.markdown(st.session_state["summary"])
+
+pdf_file = create_pdf(
+    "AI Summary",
+    st.session_state["summary"]
+)
+
+with open(pdf_file, "rb") as file:
+
+    st.download_button(
+        label="📥 Download Summary PDF",
+        data=file,
+        file_name="StudySphere_Summary.pdf",
+        mime="application/pdf"
+    )

@@ -114,3 +114,30 @@ Keep the answer concise and easy to understand.
     except Exception:
         return "⚠️ Gemini is currently busy. Please try again in a minute."
 
+
+
+def generate_planner(text):
+    prompt = f"""
+Create a 5-day study plan from these notes.
+
+Requirements:
+- Divide topics across 5 days
+- Include revision every day
+- Keep the schedule balanced
+- Make it suitable for exam preparation
+
+Notes:
+{text}
+"""
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+
+        return response.text
+
+    except Exception:
+        return "⚠️ Gemini is currently busy. Please try again in a minute."
+

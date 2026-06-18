@@ -1,109 +1,121 @@
 import streamlit as st
 from pypdf import PdfReader
 
+# ---------------- PAGE CONFIG ---------------- #
+
 st.set_page_config(
     page_title="StudySphere AI",
     page_icon="📚",
     layout="wide"
 )
 
-st.markdown("""
-<style>
-
-.stApp{
-    background-color:#F8F3ED;
-}
-
-/* Title */
-
-h1{
-    text-align:center;
-    color:#5C4B3B;
-    font-size:58px;
-}
-
-h3{
-    text-align:center;
-    color:#876B58;
-}
-
-/* Upload Box */
-
-[data-testid="stFileUploader"]{
-    background:white;
-    padding:20px;
-    border-radius:18px;
-    border:1px solid #E7DED3;
-}
-
-/* Buttons */
-
-.stButton>button{
-    width:100%;
-    height:75px;
-    border-radius:18px;
-    border:none;
-    font-size:18px;
-    font-weight:bold;
-    background:white;
-    color:#5C4B3B;
-    box-shadow:0px 4px 12px rgba(0,0,0,0.08);
-    transition:0.25s;
-}
-
-.stButton>button:hover{
-    transform:scale(1.03);
-    background:#EFE6DC;
-}
-
-/* Success Box */
-
-.stAlert{
-    border-radius:15px;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("# 🌸 StudySphere AI")
-
-st.markdown("### Your Personal AI Study Room")
+# ---------------- CSS ---------------- #
 
 st.markdown(
-"""
-<center>
+    """
+    <style>
 
-Learn Smarter • Revise Faster • Score Better
+    .stApp{
+        background-color:#F8F3ED;
+    }
 
-</center>
-""",
-unsafe_allow_html=True
+    h1{
+        text-align:center;
+        color:#5C4B3B;
+        font-size:58px;
+    }
+
+    h3{
+        text-align:center;
+        color:#876B58;
+    }
+
+    [data-testid="stFileUploader"]{
+        background:white;
+        padding:20px;
+        border-radius:18px;
+        border:1px solid #E7DED3;
+    }
+
+    .stButton>button{
+        width:100%;
+        height:75px;
+        border-radius:18px;
+        border:none;
+        font-size:18px;
+        font-weight:bold;
+        background:white;
+        color:#5C4B3B;
+        box-shadow:0px 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .stButton>button:hover{
+        background:#EFE6DC;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
-st.divider()
+# ---------------- HERO ---------------- #
 
-st.info("""
-📚 Upload your notes once and let AI generate:
+st.markdown(
+    """
+    <div style="text-align:center;
+    padding:25px;
+    background:white;
+    border-radius:25px;
+    box-shadow:0px 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:20px;">
 
-• 📝 Summary
+    <h1 style="color:#5C4B3B;font-size:60px;margin-bottom:0;">
+    🌸 StudySphere AI
+    </h1>
 
-• 💡 Key Points
+    <h3 style="color:#876B58;">
+    Your Personal AI Study Room
+    </h3>
 
-• 🧠 Flashcards
+    <p style="color:#9A806A;font-size:18px;">
+    Learn Smarter • Revise Faster • Score Better
+    </p>
 
-• ❓ Quiz
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
-• 💬 AI Tutor
+st.success(
+    """
+✨ AI can instantly generate:
 
-• 📅 Study Planner
-""")
+📝 Summary
+
+💡 Key Points
+
+🧠 Flashcards
+
+❓ Quiz
+
+💬 AI Tutor
+
+📅 Study Planner
+"""
+)
+
+# ---------------- FILE UPLOAD ---------------- #
+
+st.subheader("📄 Upload your Study Notes")
 
 uploaded_file = st.file_uploader(
-    "📄 Upload PDF",
+    "Choose your PDF",
     type=["pdf"]
 )
 
-if uploaded_file:
+# ---------------- PDF ---------------- #
+
+if uploaded_file is not None:
 
     reader = PdfReader(uploaded_file)
 
@@ -118,9 +130,21 @@ if uploaded_file:
 
     st.session_state["pdf_text"] = text
 
-    st.success("✅ PDF loaded successfully!")
+    words = len(text.split())
+    pages = len(reader.pages)
+    minutes = max(1, words // 200)
+
+    st.success("✅ PDF Loaded Successfully!")
+
+    c1, c2, c3 = st.columns(3)
+
+    c1.metric("📄 Pages", pages)
+    c2.metric("📝 Words", words)
+    c3.metric("⏱ Reading Time", f"{minutes} min")
 
 st.divider()
+
+# ---------------- BUTTONS ---------------- #
 
 col1, col2, col3 = st.columns(3)
 
@@ -150,20 +174,24 @@ with col6:
     if st.button("📅 Planner", use_container_width=True):
         st.switch_page("pages/6_Study_Planner.py")
 
+# ---------------- FOOTER ---------------- #
+
 st.divider()
 
 st.markdown(
-"""
-<center>
+    """
+    <center>
 
-🌿 ☕ 📚 ✨ 🌸 🪴 ⭐
+    <h4 style="color:#876B58;">
+    🌸 StudySphere AI
+    </h4>
 
-<br>
+    <p>
+    Made with ❤️ using Streamlit + Gemini AI
+    </p>
 
-Made with ❤️ using Streamlit & Gemini AI
-
-</center>
-""",
-unsafe_allow_html=True
+    </center>
+    """,
+    unsafe_allow_html=True,
 )
 
